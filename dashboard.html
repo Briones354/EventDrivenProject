@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CraveCo - Online Food Service Portal</title>
+    
+    <!-- PyScript CSS and JS -->
+    <link rel="stylesheet" href="https://pyscript.net/releases/2023.11.1/core.css" />
+    <script type="module" src="https://pyscript.net/releases/2023.11.1/core.js"></script>
+
+    <!-- Google Fonts & Lucide Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        :root {
+            --bg-dark: #0A0A0C;
+            --card-bg: #141419;
+            --input-bg: #1C1C24;
+            --border-color: #2D2D3A;
+            --brand-red: #E50914;
+            --brand-orange: #FF5722;
+            --brand-white: #FFFFFF;
+            --text-muted: #9E9EA9;
+            --accent-gradient: linear-gradient(135deg, #E50914 0%, #FF5722 100%);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--brand-white);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            background-image: 
+                radial-gradient(circle at 15% 15%, rgba(229, 9, 20, 0.12) 0%, transparent 45%),
+                radial-gradient(circle at 85% 85%, rgba(255, 87, 34, 0.12) 0%, transparent 45%);
+        }
+
+        .wrapper {
+            width: 100%;
+            max-width: 1050px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+        }
+
+        @media (max-width: 900px) {
+            .wrapper { grid-template-columns: 1fr; }
+            .hero-section { display: none; }
+        }
+
+        .hero-section {
+            position: relative;
+            background: linear-gradient(180deg, rgba(10, 10, 12, 0.6) 0%, rgba(10, 10, 12, 0.9) 100%),
+                        url('https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=1000&q=80') center/cover;
+            padding: 48px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            border-right: 1px solid var(--border-color);
+            overflow: hidden;
+        }
+
+        .promo-video-bg {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 1;
+        }
+        .promo-overlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(180deg, rgba(10, 10, 12, 0.75) 0%, rgba(10, 10, 12, 0.9) 100%); z-index: 2;
+        }
+        .hero-section > * { position: relative; z-index: 3; }
+
+        .brand-logo { display: flex; align-items: center; gap: 12px; }
+        .logo-icon {
+            width: 44px; height: 44px; background: var(--accent-gradient); border-radius: 12px;
+            display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 24px; color: #fff;
+        }
+        .brand-name { font-size: 26px; font-weight: 800; letter-spacing: -0.5px; }
+        .brand-name span { color: var(--brand-orange); }
+
+        .hero-tag {
+            display: inline-block; background: rgba(229, 9, 20, 0.15); color: var(--brand-orange);
+            border: 1px solid rgba(255, 87, 34, 0.3); padding: 6px 14px; border-radius: 20px; font-size: 13px; font-weight: 600; margin-bottom: 16px;
+        }
+
+        .hero-title { font-size: 36px; line-height: 1.2; font-weight: 800; margin-bottom: 16px; }
+        .hero-title span { background: var(--accent-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .hero-desc { color: var(--text-muted); font-size: 15px; line-height: 1.6; }
+
+        .form-section { padding: 32px 48px; display: flex; flex-direction: column; justify-content: center; position: relative; }
+        
+        .submit-btn {
+            width: 100%; padding: 12px; background: var(--accent-gradient); border: none; border-radius: 10px;
+            color: var(--brand-white); font-weight: 700; font-size: 12px; cursor: pointer; transition: opacity 0.2s ease; text-decoration: none; text-align: center; display: inline-block;
+        }
+        .submit-btn:hover { opacity: 0.92; }
+
+        .cart-btn {
+            width: 100%; padding: 10px; background: var(--input-bg); border: 1px solid var(--border-color); border-radius: 10px;
+            color: var(--brand-white); font-weight: 700; font-size: 11px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px;
+        }
+        .cart-btn:hover { border-color: var(--brand-orange); color: var(--brand-orange); }
+
+        .cancel-btn {
+            width: 100%; padding: 8px; background: transparent; border: 1px solid var(--border-color); border-radius: 8px;
+            color: var(--text-muted); font-weight: 600; font-size: 11px; cursor: pointer; margin-top: 6px;
+        }
+        .cancel-btn:hover { color: var(--brand-white); border-color: var(--brand-orange); }
+
+        .hidden { display: none !important; }
+
+        .scrollable-menu { max-height: 380px; overflow-y: auto; padding-right: 6px; }
+        .scrollable-menu::-webkit-scrollbar { width: 6px; }
+        .scrollable-menu::-webkit-scrollbar-track { background: var(--input-bg); border-radius: 4px; }
+        .scrollable-menu::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 4px; }
+
+        .card-select, .card-input {
+            width: 100%; padding: 6px 8px; background-color: var(--card-bg);
+            border: 1px solid var(--border-color); border-radius: 8px; color: var(--brand-white); font-size: 10px; outline: none; margin-bottom: 6px;
+        }
+
+        .cart-icon-btn {
+            position: relative; background: var(--input-bg); border: 1px solid var(--border-color); padding: 8px 12px; border-radius: 10px; cursor: pointer; color: var(--brand-white); display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 700; text-decoration: none;
+        }
+        .cart-count-badge {
+            background: var(--brand-red); color: white; border-radius: 50%; width: 18px; height: 18px; font-size: 10px; font-weight: 800; display: flex; align-items: center; justify-content: center;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="wrapper">
+        <!-- Left Hero Section -->
+        <div class="hero-section" id="left-hero-container">
+            <div id="video-container">
+                <video autoplay muted loop playsinline id="hero-promo-video" class="promo-video-bg">
+                    <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <div class="promo-overlay"></div>
+            </div>
+
+            <div class="brand-logo">
+                <div class="logo-icon">C</div>
+                <div class="brand-name">Crave<span>Co</span></div>
+            </div>
+            <div>
+                <span class="hero-tag">🔥 Fresh & Fast Online Delivery</span>
+                <h1 class="hero-title">Satisfy your <span>cravings</span> instantly.</h1>
+                <p class="hero-desc">Log in to order directly from CraveCo's kitchen and track your live dispatch status in real-time.</p>
+            </div>
+            <div style="font-size: 12px; color: var(--text-muted);">&copy; 2026 CraveCo Food Services. All rights reserved.</div>
+        </div>
+
+        <!-- Right Section Container -->
+        <div class="form-section">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                <div>
+                    <h2 style="font-size: 18px; font-weight: 800;">Deliver to <span style="color: var(--brand-orange);">Cebu City</span> 📍</h2>
+                    <p style="color: var(--text-muted); font-size: 12px;" id="welcome-user-subtitle">Ready for your meal?</p>
+                </div>
+
+                <div style="display: flex; gap: 8px; align-items: center;">
+                    <a href="cart.html" class="cart-icon-btn">
+                        <i data-lucide="shopping-cart" style="width: 16px; height: 16px;"></i>
+                        <span class="cart-count-badge" id="cart-badge-count">0</span>
+                    </a>
+                    <a href="index.html" class="submit-btn" style="width: auto; padding: 6px 12px; font-size: 11px;">Sign Out</a>
+                </div>
+            </div>
+
+            <div class="scrollable-menu">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                    
+                    <!-- Food Item 1 -->
+                    <div style="background: var(--input-bg); border: 1px solid var(--border-color); border-radius: 14px; overflow: hidden;">
+                        <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=400&q=80" alt="Burger" style="width: 100%; height: 95px; object-fit: cover;">
+                        <div style="padding: 10px;">
+                            <div style="font-weight: 700; font-size: 13px; margin-bottom: 2px;">Double Crave Smash</div>
+                            <div style="font-size: 11px; color: var(--text-muted); margin-bottom: 6px;">25 mins • ₱249</div>
+                            
+                            <div id="btn-container-1" style="display: flex; flex-direction: column; gap: 6px;">
+                                <button class="submit-btn" py-click="open_card_options" data-id="1">Order Now</button>
+                                <button class="cart-btn" py-click="add_to_cart" data-item="Double Crave Smash" data-price="249">Add to Cart</button>
+                            </div>
+
+                            <div id="options-container-1" class="hidden" style="margin-top: 6px;">
+                                <select id="pay-1" class="card-select">
+                                    <option value="COD">Cash on Delivery</option>
+                                    <option value="GCash">GCash</option>
+                                    <option value="Card">Credit/Debit Card</option>
+                                </select>
+                                <input type="text" id="note-1" class="card-input" placeholder="Special Request...">
+                                <button class="submit-btn" py-click="confirm_card_order" data-item="Double Crave Smash" data-price="₱249" data-id="1" style="font-size: 10px; padding: 6px;">Confirm Order ➔</button>
+                                <button class="cancel-btn" py-click="cancel_card_options" data-id="1">Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Food Item 2 -->
+                    <div style="background: var(--input-bg); border: 1px solid var(--border-color); border-radius: 14px; overflow: hidden;">
+                        <img src="https://images.unsplash.com/photo-1573080496219-bb080dd4f877?auto=format&fit=crop&w=400&q=80" alt="Fries" style="width: 100%; height: 95px; object-fit: cover;">
+                        <div style="padding: 10px;">
+                            <div style="font-weight: 700; font-size: 13px; margin-bottom: 2px;">Crave Mega Fries</div>
+                            <div style="font-size: 11px; color: var(--text-muted); margin-bottom: 6px;">15 mins • ₱129</div>
+                            
+                            <div id="btn-container-2" style="display: flex; flex-direction: column; gap: 6px;">
+                                <button class="submit-btn" py-click="open_card_options" data-id="2">Order Now</button>
+                                <button class="cart-btn" py-click="add_to_cart" data-item="Crave Mega Fries" data-price="129">Add to Cart</button>
+                            </div>
+
+                            <div id="options-container-2" class="hidden" style="margin-top: 6px;">
+                                <select id="pay-2" class="card-select">
+                                    <option value="COD">Cash on Delivery</option>
+                                    <option value="GCash">GCash</option>
+                                    <option value="Card">Credit/Debit Card</option>
+                                </select>
+                                <input type="text" id="note-2" class="card-input" placeholder="Special Request...">
+                                <button class="submit-btn" py-click="confirm_card_order" data-item="Crave Mega Fries" data-price="₱129" data-id="2" style="font-size: 10px; padding: 6px;">Confirm Order ➔</button>
+                                <button class="cancel-btn" py-click="cancel_card_options" data-id="2">Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Food Item 3 -->
+                    <div style="background: var(--input-bg); border: 1px solid var(--border-color); border-radius: 14px; overflow: hidden;">
+                        <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=400&q=80" alt="Pizza" style="width: 100%; height: 95px; object-fit: cover;">
+                        <div style="padding: 10px;">
+                            <div style="font-weight: 700; font-size: 13px; margin-bottom: 2px;">Cheesy Pepperoni</div>
+                            <div style="font-size: 11px; color: var(--text-muted); margin-bottom: 6px;">30 mins • ₱389</div>
+                            
+                            <div id="btn-container-3" style="display: flex; flex-direction: column; gap: 6px;">
+                                <button class="submit-btn" py-click="open_card_options" data-id="3">Order Now</button>
+                                <button class="cart-btn" py-click="add_to_cart" data-item="Cheesy Pepperoni" data-price="389">Add to Cart</button>
+                            </div>
+
+                            <div id="options-container-3" class="hidden" style="margin-top: 6px;">
+                                <select id="pay-3" class="card-select">
+                                    <option value="COD">Cash on Delivery</option>
+                                    <option value="GCash">GCash</option>
+                                    <option value="Card">Credit/Debit Card</option>
+                                </select>
+                                <input type="text" id="note-3" class="card-input" placeholder="Special Request...">
+                                <button class="submit-btn" py-click="confirm_card_order" data-item="Cheesy Pepperoni" data-price="₱389" data-id="3" style="font-size: 10px; padding: 6px;">Confirm Order ➔</button>
+                                <button class="cancel-btn" py-click="cancel_card_options" data-id="3">Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Food Item 4 -->
+                    <div style="background: var(--input-bg); border: 1px solid var(--border-color); border-radius: 14px; overflow: hidden;">
+                        <img src="https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=400&q=80" alt="Dessert" style="width: 100%; height: 95px; object-fit: cover;">
+                        <div style="padding: 10px;">
+                            <div style="font-weight: 700; font-size: 13px; margin-bottom: 2px;">Molten Lava Cake</div>
+                            <div style="font-size: 11px; color: var(--text-muted); margin-bottom: 6px;">20 mins • ₱159</div>
+                            
+                            <div id="btn-container-4" style="display: flex; flex-direction: column; gap: 6px;">
+                                <button class="submit-btn" py-click="open_card_options" data-id="4">Order Now</button>
+                                <button class="cart-btn" py-click="add_to_cart" data-item="Molten Lava Cake" data-price="159">Add to Cart</button>
+                            </div>
+
+                            <div id="options-container-4" class="hidden" style="margin-top: 6px;">
+                                <select id="pay-4" class="card-select">
+                                    <option value="COD">Cash on Delivery</option>
+                                    <option value="GCash">GCash</option>
+                                    <option value="Card">Credit/Debit Card</option>
+                                </select>
+                                <input type="text" id="note-4" class="card-input" placeholder="Special Request...">
+                                <button class="submit-btn" py-click="confirm_card_order" data-item="Molten Lava Cake" data-price="₱159" data-id="4" style="font-size: 10px; padding: 6px;">Confirm Order ➔</button>
+                                <button class="cancel-btn" py-click="cancel_card_options" data-id="4">Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>lucide.createIcons();</script>
+    <script type="py" src="./main.py"></script>
+</body>
+</html>
