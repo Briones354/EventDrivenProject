@@ -5,11 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CraveCo - Your Cart</title>
     
-    <!-- PyScript CSS and JS -->
     <link rel="stylesheet" href="https://pyscript.net/releases/2023.11.1/core.css" />
     <script type="module" src="https://pyscript.net/releases/2023.11.1/core.js"></script>
 
-    <!-- Google Fonts & Lucide Icons -->
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
 
@@ -119,10 +117,10 @@
 
         .card-select, .card-input {
             width: 100%; padding: 8px 10px; background-color: var(--card-bg);
-            border: 1px solid var(--border-color); border-radius: 8px; color: var(--brand-white); font-size: 12px; outline: none; margin-bottom: 8px;
+            border: 1px solid var(--border-color); border-radius: 8px; color: var(--brand-white); font-size: 11px; outline: none; margin-bottom: 6px;
         }
 
-        .scrollable-recommendations { max-height: 140px; overflow-y: auto; padding-right: 4px; margin-top: 6px; }
+        .scrollable-recommendations { max-height: 120px; overflow-y: auto; padding-right: 4px; margin-top: 6px; }
         .scrollable-recommendations::-webkit-scrollbar { width: 4px; }
         .scrollable-recommendations::-webkit-scrollbar-track { background: var(--input-bg); border-radius: 4px; }
         .scrollable-recommendations::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 4px; }
@@ -131,7 +129,6 @@
 <body>
 
     <div class="wrapper">
-        <!-- Left Hero Section -->
         <div class="hero-section">
             <div class="brand-logo">
                 <div class="logo-icon">C</div>
@@ -140,44 +137,42 @@
             <div>
                 <span class="hero-tag">🛒 Review Your Order</span>
                 <h1 class="hero-title">Almost ready to <span>eat</span>.</h1>
-                <p class="hero-desc">Double-check your items, select your preferred payment method, and complete your order.</p>
+                <p class="hero-desc">Double-check your items, fill in your delivery details, and complete your order.</p>
             </div>
             <div style="font-size: 12px; color: var(--text-muted);">&copy; 2026 CraveCo Food Services. All rights reserved.</div>
         </div>
 
-        <!-- Right Cart Section -->
         <div class="form-section">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
                 <h2 style="font-size: 18px; font-weight: 800;">Your Cart 🛒</h2>
                 <a href="dashboard.html" class="helper-link">← Back to Menu</a>
             </div>
 
-            <!-- Cart Items Display Area -->
-            <div id="cart-items-list" style="max-height: 160px; overflow-y: auto; margin-bottom: 10px; padding-right: 4px;"></div>
+            <div id="cart-items-list" style="max-height: 150px; overflow-y: auto; margin-bottom: 10px; padding-right: 4px;"></div>
 
             <div style="background: var(--input-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 10px; margin-bottom: 10px;">
-                <div style="display: flex; justify-content: space-between; font-size: 13px; font-weight: 700; margin-bottom: 6px;">
+                <div style="display: flex; justify-content: space-between; font-size: 13px; font-weight: 700; margin-bottom: 8px;">
                     <span>Total Amount (Selected):</span>
                     <span id="cart-total-price" style="color: var(--brand-orange);">₱0</span>
                 </div>
 
-                <select id="cart-payment-method" class="card-select" style="margin-bottom: 4px;">
+                <select id="cart-payment-method" class="card-select">
                     <option value="COD">Cash on Delivery</option>
                     <option value="GCash">GCash</option>
                     <option value="Card">Credit/Debit Card</option>
                 </select>
+                <input type="text" id="cart-phone" class="card-input" placeholder="Contact Number...">
+                <input type="text" id="cart-address" class="card-input" placeholder="Delivery Address...">
                 <input type="text" id="cart-notes" class="card-input" placeholder="Delivery notes for rider...">
             </div>
 
             <button class="submit-btn" py-click="confirm_cart_checkout" style="margin-bottom: 12px;">Checkout Selected ➔</button>
 
-            <!-- Scrollable You May Like Section -->
             <div>
                 <div style="font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 4px;">YOU MAY LIKE ✨</div>
                 <div class="scrollable-recommendations">
                     <div style="display: flex; flex-direction: column; gap: 6px;">
                         
-                        <!-- Recommendation 1 -->
                         <div style="background: var(--input-bg); border: 1px solid var(--border-color); border-radius: 8px; padding: 8px 12px; display: flex; justify-content: space-between; align-items: center;">
                             <div>
                                 <div style="font-size: 12px; font-weight: 700;">Garlic Butter Wings</div>
@@ -186,7 +181,6 @@
                             <button class="cart-add-btn" py-click="add_to_cart" data-item="Garlic Butter Wings" data-price="199">+ Add</button>
                         </div>
 
-                        <!-- Recommendation 2 -->
                         <div style="background: var(--input-bg); border: 1px solid var(--border-color); border-radius: 8px; padding: 8px 12px; display: flex; justify-content: space-between; align-items: center;">
                             <div>
                                 <div style="font-size: 12px; font-weight: 700;">Iced Caramel Macchiato</div>
@@ -195,7 +189,6 @@
                             <button class="cart-add-btn" py-click="add_to_cart" data-item="Iced Caramel Macchiato" data-price="110">+ Add</button>
                         </div>
 
-                        <!-- Recommendation 3 -->
                         <div style="background: var(--input-bg); border: 1px solid var(--border-color); border-radius: 8px; padding: 8px 12px; display: flex; justify-content: space-between; align-items: center;">
                             <div>
                                 <div style="font-size: 12px; font-weight: 700;">Crispy Onion Rings</div>

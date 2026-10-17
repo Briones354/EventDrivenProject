@@ -1,8 +1,6 @@
-# noinspection PyUnresolvedReferences
 from js import document, lucide, window
 import json
 
-# --- LOCALSTORAGE CART HELPERS ---
 def get_cart():
     try:
         cart_json = window.localStorage.getItem("craveco_cart")
@@ -18,7 +16,6 @@ def save_cart(cart):
     except Exception:
         pass
 
-# --- AUTHENTICATION & LOGIN LOGIC ---
 def handle_login(event):
     email = document.getElementById("login-email").value.strip()
     password = document.getElementById("login-pass").value.strip()
@@ -71,7 +68,6 @@ def handle_register(event):
     window.localStorage.setItem("craveco_user", name)
     window.location.href = "dashboard.html"
 
-# --- DASHBOARD CARD OPTIONS & ORDERING ---
 def open_card_options(event):
     btn = event.currentTarget
     card_id = btn.getAttribute("data-id")
@@ -115,17 +111,15 @@ def confirm_card_order(event):
     window.localStorage.setItem("craveco_last_order", json.dumps(order_summary))
     window.location.href = "order_success.html"
 
-# --- CART LOGIC ---
 def add_to_cart(event):
     btn = event.currentTarget
     item_name = btn.getAttribute("data-item")
     
-    # Check if data-price is present (from recommendation or dashboard)
     price_attr = btn.getAttribute("data-price")
     if price_attr:
         item_price = int(price_attr)
     else:
-        item_price = 199 # fallback
+        item_price = 199 
 
     cart = get_cart()
     if item_name in cart:
@@ -158,7 +152,7 @@ def decrease_qty(event):
         if cart[item_name]["qty"] > 1:
             cart[item_name]["qty"] -= 1
         else:
-            del cart[item_name] # Remove item if quantity drops below 1
+            del cart[item_name] 
 
     save_cart(cart)
     update_cart_badge()
@@ -252,7 +246,6 @@ def confirm_cart_checkout(event):
     if not cart:
         return
 
-    # Filter only selected (checked) items for checkout
     selected_items = {name: data for name, data in cart.items() if data.get("selected", True)}
     
     if not selected_items:
@@ -277,7 +270,6 @@ def confirm_cart_checkout(event):
     }
     window.localStorage.setItem("craveco_last_order", json.dumps(order_summary))
     
-    # Remove only checked-out items from the cart storage
     for name in selected_items:
         del cart[name]
     save_cart(cart)
@@ -285,6 +277,5 @@ def confirm_cart_checkout(event):
     update_cart_badge()
     window.location.href = "order_success.html"
 
-# Run badge update and cart rendering on load if elements are present
 update_cart_badge()
 render_cart_items()
