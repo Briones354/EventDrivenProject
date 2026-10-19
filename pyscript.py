@@ -1,0 +1,171 @@
+"""
+CraveCo backend: Flask + SQLite.
+Run:  pip install flask
+      python app.py
+Open: http://localhost:5000
+Put this file in the SAME folder as index.html, main.py, etc.
+"""
+import sqlite3
+from flask import Flask, request, jsonify, session, send_from_directory, g
+from werkzeug.security import generate_password_hash, check_password_hash
+
+app = Flask(__name__, static_folder=".", static_url_path="")
+app.secret_key = "change-this-to-a-long-random-string"
+DB_FILE = "craveco.db"
+
+SCHEMA = """
+CREATE TABLE IF NOT EXISTS users (
+    id            INTEGER PRIMARY KEY AUTOINCREMENT,
+    name          TEXT NOT NULL,
+    email         TEXT NOT NULL UNIQUE,
+    password_hash TEXT NOT NULL,
+    created_at    TEXT DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS orders (
+    id             INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id        INTEGER NOT NULL REFERENCES users(id),
+    payment_method TEXT NOT NULL,
+    phone          TEXT,
+    address        TEXT,
+    notes          TEXT,
+    total          INTEGER NOT NULL,
+    status         TEXT DEFAULT 'Preparing',
+    created_at     TEXT DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS order_items (
+    id        INTEGER PRIMARY KEY AUTOINCREMENT,
+    order_id  INTEGER NOT NULL REFERENCES orders(id),
+    item_name TEXT NOT NULL,
+    price     INTEGER NOT NULL,
+    qty       INTEGER NOT NULL
+);
+"""
+
+
+def get_db():
+    if "db" not in g:
+        g.db = sqlite3.connect(DB_FILE)
+        g.db.row_factory = sqlite3.Row
+    return g.db
+
+
+@app.teardown_appcontext
+def close_db(_exc):
+    db = g.pop("db", None)
+    if db is not None:
+        db.close()
+
+
+def init_db():
+    with sqlite3.connect(DB_FILE) as con:
+        con.executescript(SCHEMA)
+
+
+@app.route("/")
+def home():
+    return send_from_directory(".", "index.html")
+
+
+@app.post("/api/register")
+def register():
+    data = request.get_json(force=True)
+    name = (data.get("name") or "").strip()
+    email = (data.get("email") or "").strip().lower()
+    password = data.get("password") or ""
+
+    if not name or "@" not in email or len(password) < 6:
+        return jsonify(error="Enter a name, a valid email, and a password of 6+ characters."), 400
+
+    try:
+        db = get_db()
+        cur = db.execute(
+            "INSERT INTO users (name, email, password_hash) VALUES (?, ?, ?)",
+            (name, email, generate_password_hash(password)),
+        )
+        db.commit()
+    except sqlite3.IntegrityError:
+        return jsonify(error="That email is already registered."), 409
+
+    session["user_id"] = cur.lastrowid
+    return jsonify(name=name)
+
+
+@app.post("/api/login")
+def login():
+    data = request.get_json(force=True)
+    email = (data.get("email") or "").strip().lower()
+    password = data.get("password") or ""
+
+    user = get_db().execute("SELECT * FROM users WHERE email = ?", (email,)).fetchone()
+    if not user or not check_password_hash(user["password_hash"], password):
+        return jsonify(error="Invalid email or password."), 401
+
+    session["user_id"] = user["id"]
+    return jsonify(name=user["name"])
+
+
+@app.post("/api/logout")
+def logout():
+    session.clear()
+    return jsonify(ok=True)
+
+
+@app.post("/api/orders")
+def create_order():
+    if "user_id" not in session:
+        return jsonify(error="Please sign in first."), 401
+
+    data = request.get_json(force=True)
+    items = data.get("items") or []
+    if not items:
+        return jsonify(error="Cart is empty."), 400
+
+    # Recalculate the total on the server; never trust the browser's number
+    total = sum(int(i["price"]) * int(i["qty"]) for i in items)
+
+    db = get_db()
+    cur = db.execute(
+        "INSERT INTO orders (user_id, payment_method, phone, address, notes, total) "
+        "VALUES (?, ?, ?, ?, ?, ?)",
+        (
+            session["user_id"],
+            data.get("payment", "COD"),
+            data.get("phone", ""),
+            data.get("address", ""),
+            data.get("notes", ""),
+            total,
+        ),
+    )
+    order_id = cur.lastrowid
+    db.executemany(
+        "INSERT INTO order_items (order_id, item_name, price, qty) VALUES (?, ?, ?, ?)",
+        [(order_id, i["name"], int(i["price"]), int(i["qty"])) for i in items],
+    )
+    db.commit()
+    return jsonify(order_id=order_id, total=total)
+
+
+@app.get("/api/orders")
+def my_orders():
+    if "user_id" not in session:
+        return jsonify(error="Please sign in first."), 401
+
+    db = get_db()
+    orders = db.execute(
+        "SELECT * FROM orders WHERE user_id = ? ORDER BY id DESC", (session["user_id"],)
+    ).fetchall()
+
+    result = []
+    for o in orders:
+        items = db.execute(
+            "SELECT item_name, price, qty FROM order_items WHERE order_id = ?", (o["id"],)
+        ).fetchall()
+        result.append({**dict(o), "items": [dict(i) for i in items]})
+    return jsonify(result)
+
+
+if __name__ == "__main__":
+    init_db()
+    app.run(debug=True, port=5000)
