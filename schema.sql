@@ -1,0 +1,35 @@
+CREATE DATABASE IF NOT EXISTS craveco
+    CHARACTER SET utf8mb4
+    COLLATE utf8mb4_unicode_ci;
+
+USE craveco;
+
+CREATE TABLE IF NOT EXISTS users (
+    id            INT AUTO_INCREMENT PRIMARY KEY,
+    name          VARCHAR(100) NOT NULL,
+    email         VARCHAR(150) NOT NULL UNIQUE,
+    password_hash VARCHAR(255) NOT NULL,
+    created_at    DATETIME DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB;
+
+CREATE TABLE IF NOT EXISTS orders (
+    id             INT AUTO_INCREMENT PRIMARY KEY,
+    user_id        INT NOT NULL,
+    payment_method VARCHAR(20) NOT NULL,
+    phone          VARCHAR(30),
+    address        VARCHAR(255),
+    notes          VARCHAR(255),
+    total          INT NOT NULL,
+    status         VARCHAR(30) DEFAULT 'Preparing',
+    created_at     DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id)
+) ENGINE=InnoDB;
+
+CREATE TABLE IF NOT EXISTS order_items (
+    id        INT AUTO_INCREMENT PRIMARY KEY,
+    order_id  INT NOT NULL,
+    item_name VARCHAR(100) NOT NULL,
+    price     INT NOT NULL,
+    qty       INT NOT NULL,
+    FOREIGN KEY (order_id) REFERENCES orders(id) ON DELETE CASCADE
+) ENGINE=InnoDB;
