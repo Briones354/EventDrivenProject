@@ -25,7 +25,7 @@ DB_CONFIG = {
     "host": os.environ.get("DB_HOST", "localhost"),
     "port": int(os.environ.get("DB_PORT", 3306)),
     "user": os.environ.get("DB_USER", "root"),
-    "password": os.environ.get("DB_PASSWORD", "your-mysql-password"),
+    "password": os.environ.get("DB_PASSWORD", ""),
     "database": os.environ.get("DB_NAME", "craveco"),
 }
 
@@ -82,11 +82,9 @@ def register():
         )
         db.commit()
     except errors.IntegrityError:
-        return jsonify(error="That email is already registered. Try signing in instead."), 409
+        return jsonify(error="An account with this email already exists."), 400
 
-    session["user_id"] = cur.lastrowid
-    return jsonify(name=name)
-
+    return jsonify(message="Account created successfully."), 201  
 
 @app.post("/api/login")
 def login():
