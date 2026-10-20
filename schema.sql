@@ -1,10 +1,10 @@
-CREATE DATABASE IF NOT EXISTS craveco
+CREATE DATABASE craveco
     CHARACTER SET utf8mb4
     COLLATE utf8mb4_unicode_ci;
 
 USE craveco;
 
-CREATE TABLE IF NOT EXISTS users (
+CREATE TABLE users (
     id            INT AUTO_INCREMENT PRIMARY KEY,
     name          VARCHAR(100) NOT NULL,
     email         VARCHAR(150) NOT NULL UNIQUE,
@@ -12,7 +12,7 @@ CREATE TABLE IF NOT EXISTS users (
     created_at    DATETIME DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB;
 
-CREATE TABLE IF NOT EXISTS orders (
+CREATE TABLE orders (
     id             INT AUTO_INCREMENT PRIMARY KEY,
     user_id        INT NOT NULL,
     payment_method VARCHAR(20) NOT NULL,
@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS orders (
     FOREIGN KEY (user_id) REFERENCES users(id)
 ) ENGINE=InnoDB;
 
-CREATE TABLE IF NOT EXISTS order_items (
+CREATE TABLE order_items (
     id        INT AUTO_INCREMENT PRIMARY KEY,
     order_id  INT NOT NULL,
     item_name VARCHAR(100) NOT NULL,
