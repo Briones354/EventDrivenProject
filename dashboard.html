@@ -515,7 +515,7 @@
                 <div class="biz-grid">
                     <div class="biz-item">
                         <strong>🛍️ Offerings</strong>
-                        Burgers, Wings, Fries, Rings, Sisig &amp; Drinks
+                        Burgers, Wings, Fries, Rings &amp; Chicken
                     </div>
 
                     <div class="biz-item">
@@ -573,9 +573,7 @@
             <button class="category-tab" onclick="filterCategory('burgers', this)">Burgers 🍔</button>
             <button class="category-tab" onclick="filterCategory('wings', this)">Chicken Wings 🍗</button>
             <button class="category-tab" onclick="filterCategory('fries', this)">Fries &amp; Rings 🍟</button>
-            <button class="category-tab" onclick="filterCategory('sisig', this)">Sisig 🍳</button>
-            <button class="category-tab" onclick="filterCategory('desserts', this)">Desserts 🍰</button>
-            <button class="category-tab" onclick="filterCategory('drinks', this)">Drinks 🧋</button>
+            <button class="category-tab" onclick="filterCategory('chicken', this)">Chicken & Fries🍗</button>
         </div>
 
         <!-- FOOD CARDS -->
@@ -584,7 +582,7 @@
 
                 <!-- 1. DOUBLE CRAVE SMASH -->
                 <div class="food-card category-burgers">
-                    <img src="Mga giatay.jpg"
+                    <img src="Double Crave Smash.jpg"
                          alt="Double Crave Smash" class="menu-img">
 
                     <div class="food-info">
@@ -700,7 +698,7 @@
 
                 <!-- 5. CRAVE MEGA FRIES -->
                 <div class="food-card category-fries">
-                    <img src="https://images.unsplash.com/photo-1573080496219-bb080dd4f877?auto=format&fit=crop&w=400&q=80"
+                    <img src="Crave Mega Fries.png"
                          alt="Crave Mega Fries" class="menu-img">
 
                     <div class="food-info">
@@ -756,18 +754,18 @@
                     </div>
                 </div>
 
-                <!-- 7. SIZZLING PORK SISIG -->
-                <div class="food-card category-sisig">
-                    <img src="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=400&q=80"
-                         alt="Sizzling Pork Sisig" class="menu-img">
+                <!-- 7. CHICKEN AND FRIES -->
+                <div class="food-card category-chicken">
+                    <img src="Chicken and Fries.png"
+                         alt="Chicken and Fries" class="menu-img">
 
                     <div class="food-info">
-                        <div class="food-name">Sizzling Pork Sisig</div>
-                        <div class="food-price">25 mins • ₱210</div>
+                        <div class="food-name">Chicken and Fries</div>
+                        <div class="food-price">25 mins • ₱209</div>
 
                         <div id="btn-container-7" class="food-actions">
                             <button class="submit-btn" py-click="open_card_options" data-id="7">Order Now</button>
-                            <button class="cart-btn" py-click="add_to_cart" data-item="Sizzling Pork Sisig" data-price="210">Add to Cart</button>
+                            <button class="cart-btn" py-click="add_to_cart" data-item="Chicken and Fries" data-price="209">Add to Cart</button>
                         </div>
 
                         <div id="options-container-7" class="hidden" style="margin-top:6px;">
@@ -779,66 +777,8 @@
                             <input type="text" id="phone-7" class="card-input" placeholder="Contact Number...">
                             <input type="text" id="address-7" class="card-input" placeholder="Delivery Address...">
                             <input type="text" id="note-7" class="card-input" placeholder="Special Request...">
-                            <button class="submit-btn" py-click="confirm_card_order" data-item="Sizzling Pork Sisig" data-price="₱210" data-id="7">Confirm Order ➔</button>
+                            <button class="submit-btn" py-click="confirm_card_order" data-item="Chicken and Fries" data-price="₱209" data-id="7">Confirm Order ➔</button>
                             <button class="cancel-btn" py-click="cancel_card_options" data-id="7">Cancel</button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 8. MOLTEN LAVA CAKE -->
-                <div class="food-card category-desserts">
-                    <img src="https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=400&q=80"
-                         alt="Molten Lava Cake" class="menu-img">
-
-                    <div class="food-info">
-                        <div class="food-name">Molten Lava Cake</div>
-                        <div class="food-price">20 mins • ₱159</div>
-
-                        <div id="btn-container-8" class="food-actions">
-                            <button class="submit-btn" py-click="open_card_options" data-id="8">Order Now</button>
-                            <button class="cart-btn" py-click="add_to_cart" data-item="Molten Lava Cake" data-price="159">Add to Cart</button>
-                        </div>
-
-                        <div id="options-container-8" class="hidden" style="margin-top:6px;">
-                            <select id="pay-8" class="card-select">
-                                <option value="COD">Cash on Delivery</option>
-                                <option value="GCash">GCash</option>
-                                <option value="Card">Credit/Debit Card</option>
-                            </select>
-                            <input type="text" id="phone-8" class="card-input" placeholder="Contact Number...">
-                            <input type="text" id="address-8" class="card-input" placeholder="Delivery Address...">
-                            <input type="text" id="note-8" class="card-input" placeholder="Special Request...">
-                            <button class="submit-btn" py-click="confirm_card_order" data-item="Molten Lava Cake" data-price="₱159" data-id="8">Confirm Order ➔</button>
-                            <button class="cancel-btn" py-click="cancel_card_options" data-id="8">Cancel</button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 9. ICED CARAMEL MACCHIATO -->
-                <div class="food-card category-drinks">
-                    <img src="https://images.unsplash.com/photo-1517701604599-bb29b565090c?auto=format&fit=crop&w=400&q=80"
-                         alt="Iced Caramel Macchiato" class="menu-img">
-
-                    <div class="food-info">
-                        <div class="food-name">Iced Caramel Macchiato</div>
-                        <div class="food-price">10 mins • ₱110</div>
-
-                        <div id="btn-container-9" class="food-actions">
-                            <button class="submit-btn" py-click="open_card_options" data-id="9">Order Now</button>
-                            <button class="cart-btn" py-click="add_to_cart" data-item="Iced Caramel Macchiato" data-price="110">Add to Cart</button>
-                        </div>
-
-                        <div id="options-container-9" class="hidden" style="margin-top:6px;">
-                            <select id="pay-9" class="card-select">
-                                <option value="COD">Cash on Delivery</option>
-                                <option value="GCash">GCash</option>
-                                <option value="Card">Credit/Debit Card</option>
-                            </select>
-                            <input type="text" id="phone-9" class="card-input" placeholder="Contact Number...">
-                            <input type="text" id="address-9" class="card-input" placeholder="Delivery Address...">
-                            <input type="text" id="note-9" class="card-input" placeholder="Special Request...">
-                            <button class="submit-btn" py-click="confirm_card_order" data-item="Iced Caramel Macchiato" data-price="₱110" data-id="9">Confirm Order ➔</button>
-                            <button class="cancel-btn" py-click="cancel_card_options" data-id="9">Cancel</button>
                         </div>
                     </div>
                 </div>

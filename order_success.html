@@ -246,9 +246,36 @@
 
     </div>
 
-    <script>
-        lucide.createIcons();
-    </script>
-    <script type="py" src="./main.py"></script>
+<script>
+    lucide.createIcons();
+
+    document.addEventListener("DOMContentLoaded", function () {
+        try {
+            const savedOrder = localStorage.getItem("craveco_last_order");
+
+            if (!savedOrder) {
+                return;
+            }
+
+            const order = JSON.parse(savedOrder);
+
+            document.getElementById("success-item-name").textContent =
+                order.name || "Unknown Item";
+
+            document.getElementById("success-item-price").textContent =
+                String(order.price || "₱0");
+
+            document.getElementById("success-payment").textContent =
+                order.payment || "COD";
+
+            document.getElementById("success-notes").textContent =
+                order.notes || "None";
+        } catch (error) {
+            console.error("Unable to load order details:", error);
+        }
+    });
+</script>
+
+<script type="py" src="./main.py"></script>
 </body>
 </html>
