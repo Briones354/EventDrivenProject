@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -88,17 +87,6 @@
             border-radius: 30px;
         }
 
-        .brand-name {
-            font-size: 26px;
-            font-weight: 800;
-            letter-spacing: -0.5px;
-            color: var(--brand-white);
-        }
-
-        .brand-name span {
-            color: var(--brand-orange);
-        }
-
         .hero-tag {
             display: inline-block;
             background: rgba(229, 9, 20, 0.15);
@@ -135,7 +123,7 @@
             color: var(--text-muted);
         }
 
-        /* LOGIN FORM */
+        /* FORM SECTION */
 
         .form-section {
             padding: 48px;
@@ -324,20 +312,14 @@
                 padding: 38px 30px;
             }
         }
-
-        @media (max-width: 380px) {
-            .form-section {
-                padding: 28px 20px;
-            }
-        }
     </style>
 </head>
 
 <body>
     <div class="wrapper">
 
+        <!-- LEFT HERO SECTION -->
         <div class="hero-section">
-
             <div class="brand-logo">
                 <img src="logo.png" alt="CraveCo Logo">
             </div>
@@ -360,93 +342,185 @@
             </div>
         </div>
 
-        <!-- RIGHT LOGIN FORM -->
+        <!-- RIGHT FORM SECTION -->
         <div class="form-section">
 
-            <h2 class="form-title">Welcome Back!</h2>
+            <!-- LOGIN CARD -->
+            <div id="login-card">
+                <h2 class="form-title">Welcome Back!</h2>
 
-            <p class="form-subtitle">
-                Sign in to access your saved orders &amp; rewards.
-            </p>
+                <p class="form-subtitle">
+                    Sign in to access your saved orders &amp; rewards.
+                </p>
 
-            <div class="form-group">
-                <div class="label-row">
-                    <label for="login-email" class="form-label">
-                        Email Address
-                    </label>
+                <div class="form-group">
+                    <div class="label-row">
+                        <label for="login-email" class="form-label">Email Address</label>
+                    </div>
+
+                    <div class="input-box">
+                        <span class="left-icon">
+                            <i data-lucide="mail"></i>
+                        </span>
+
+                        <input
+                            type="email"
+                            id="login-email"
+                            class="form-input"
+                            placeholder="foodie@craveco.com"
+                            autocomplete="email">
+                    </div>
                 </div>
 
-                <div class="input-box">
-                    <span class="left-icon">
-                        <i data-lucide="mail"></i>
-                    </span>
+                <div class="form-group">
+                    <div class="label-row">
+                        <label for="login-pass" class="form-label">Password</label>
 
-                    <input
-                        type="email"
-                        id="login-email"
-                        class="form-input"
-                        placeholder="foodie@craveco.com"
-                        autocomplete="email">
+                        <a href="#"
+                           class="helper-link"
+                           py-click="handle_forgot_password">
+                            Forgot Password?
+                        </a>
+                    </div>
+
+                    <div class="input-box">
+                        <span class="left-icon">
+                            <i data-lucide="lock"></i>
+                        </span>
+
+                        <input
+                            type="password"
+                            id="login-pass"
+                            class="form-input"
+                            placeholder="Enter your password"
+                            autocomplete="current-password">
+
+                        <span class="toggle-password"
+                              py-click="toggle_password"
+                              role="button"
+                              tabindex="0"
+                              aria-label="Toggle password visibility">
+                            <i data-lucide="eye" id="toggle-pass-icon"></i>
+                        </span>
+                    </div>
                 </div>
-            </div>
 
-            <div class="form-group">
-                <div class="label-row">
-                    <label for="login-pass" class="form-label">
-                        Password
-                    </label>
+                <label class="checkbox-container">
+                    <input type="checkbox" id="remember-me">
+                    Remember my account
+                </label>
 
-                    <a href="#"
-                       class="helper-link"
-                       py-click="handle_forgot_password">
-                        Forgot Password?
+                <button class="submit-btn" py-click="handle_login">
+                    Sign In &amp; Start Craving ➔
+                </button>
+
+                <div class="footer-link">
+                    New to CraveCo?
+                    <a onclick="toggleAuthView()" class="helper-link">
+                        Create an Account
                     </a>
                 </div>
 
-                <div class="input-box">
-                    <span class="left-icon">
-                        <i data-lucide="lock"></i>
-                    </span>
+                <div id="status-output" class="status-box"></div>
+            </div>
 
-                    <input
-                        type="password"
-                        id="login-pass"
-                        class="form-input"
-                        placeholder="Enter your password"
-                        autocomplete="current-password">
+            <!-- REGISTER CARD (Hidden by default) -->
+            <div id="register-card" style="display: none;">
+                <h2 class="form-title">Create Account</h2>
 
-                    <span class="toggle-password"
-                          py-click="toggle_password"
-                          role="button"
-                          tabindex="0"
-                          aria-label="Toggle password visibility">
-                        <i data-lucide="eye" id="toggle-pass-icon"></i>
-                    </span>
+                <p class="form-subtitle">
+                    Sign up in seconds to start placing your orders.
+                </p>
+
+                <div class="form-group">
+                    <div class="label-row">
+                        <label for="reg-name" class="form-label">Full Name</label>
+                    </div>
+
+                    <div class="input-box">
+                        <span class="left-icon">
+                            <i data-lucide="user"></i>
+                        </span>
+
+                        <input
+                            type="text"
+                            id="reg-name"
+                            class="form-input"
+                            placeholder="Mishylla Gail Imbo"
+                            autocomplete="name">
+                    </div>
                 </div>
+
+                <div class="form-group">
+                    <div class="label-row">
+                        <label for="reg-email" class="form-label">Email Address</label>
+                    </div>
+
+                    <div class="input-box">
+                        <span class="left-icon">
+                            <i data-lucide="mail"></i>
+                        </span>
+
+                        <input
+                            type="email"
+                            id="reg-email"
+                            class="form-input"
+                            placeholder="foodie@craveco.com"
+                            autocomplete="email">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="label-row">
+                        <label for="reg-pass" class="form-label">Password (min 6 chars)</label>
+                    </div>
+
+                    <div class="input-box">
+                        <span class="left-icon">
+                            <i data-lucide="lock"></i>
+                        </span>
+
+                        <input
+                            type="password"
+                            id="reg-pass"
+                            class="form-input"
+                            placeholder="Create a secure password"
+                            autocomplete="new-password">
+                    </div>
+                </div>
+
+                <button class="submit-btn" py-click="handle_register">
+                    Create Account &amp; Sign Up ➔
+                </button>
+
+                <div class="footer-link">
+                    Already have an account?
+                    <a onclick="toggleAuthView()" class="helper-link">
+                        Sign In
+                    </a>
+                </div>
+
+                <div id="reg-status-output" class="status-box"></div>
             </div>
 
-            <label class="checkbox-container">
-                <input type="checkbox" id="remember-me">
-                Remember my account
-            </label>
-
-            <button class="submit-btn" py-click="handle_login">
-                Sign In &amp; Start Craving ➔
-            </button>
-
-            <div class="footer-link">
-                New to CraveCo?
-                <a href="register.html" class="helper-link">
-                    Create an Account
-                </a>
-            </div>
-
-            <div id="status-output" class="status-box"></div>
         </div>
     </div>
 
     <script>
         lucide.createIcons();
+
+        function toggleAuthView() {
+            const loginCard = document.getElementById('login-card');
+            const regCard = document.getElementById('register-card');
+            if (loginCard.style.display === 'none') {
+                loginCard.style.display = 'block';
+                regCard.style.display = 'none';
+            } else {
+                loginCard.style.display = 'none';
+                regCard.style.display = 'block';
+            }
+            lucide.createIcons();
+        }
     </script>
 
     <script type="py" src="./main.py"></script>

@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -85,7 +84,6 @@
             border-right: 1px solid var(--border-color);
         }
 
-        /* CraveCo logo */
         .brand-logo {
             display: flex;
             align-items: center;
@@ -98,17 +96,6 @@
             object-fit: cover;
             border-radius: 12px;
             display: block;
-        }
-
-        .brand-name {
-            font-size: 26px;
-            font-weight: 800;
-            letter-spacing: -0.5px;
-            color: var(--brand-white);
-        }
-
-        .brand-name span {
-            color: var(--brand-orange);
         }
 
         .hero-tag {
@@ -202,21 +189,6 @@
             color: var(--brand-orange);
         }
 
-        .cart-add-btn {
-            padding: 8px 16px;
-            background: var(--accent-gradient);
-            border: none;
-            border-radius: 8px;
-            color: var(--brand-white);
-            font-weight: 700;
-            font-size: 12px;
-            cursor: pointer;
-        }
-
-        .cart-add-btn:hover {
-            opacity: 0.9;
-        }
-
         .delete-btn {
             background: #E50914;
             border: none;
@@ -231,6 +203,21 @@
 
         .delete-btn:hover {
             background: #b80710;
+        }
+
+        .cart-add-btn {
+            padding: 8px 16px;
+            background: var(--accent-gradient);
+            border: none;
+            border-radius: 8px;
+            color: var(--brand-white);
+            font-weight: 700;
+            font-size: 12px;
+            cursor: pointer;
+        }
+
+        .cart-add-btn:hover {
+            opacity: 0.9;
         }
 
         .card-select,
@@ -338,7 +325,7 @@
                                 <div style="font-size: 12px; font-weight: 700;">Garlic Butter Wings</div>
                                 <div style="font-size: 11px; color: var(--text-muted);">₱199</div>
                             </div>
-                            <button class="cart-add-btn" py-click="add_to_cart" data-item="Garlic Butter Wings" data-price="199">+ Add</button>
+                            <button class="cart-add-btn direct-add" data-item="Garlic Butter Wings" data-price="199">+ Add</button>
                         </div>
 
                         <div style="background: var(--input-bg); border: 1px solid var(--border-color); border-radius: 8px; padding: 8px 12px; display: flex; justify-content: space-between; align-items: center; gap: 10px;">
@@ -346,39 +333,39 @@
                                 <div style="font-size: 12px; font-weight: 700;">Chicken and Fries</div>
                                 <div style="font-size: 11px; color: var(--text-muted);">₱209</div>
                             </div>
-                            <button class="cart-add-btn" py-click="add_to_cart" data-item="Chicken and Fries" data-price="209">+ Add</button>
+                            <button class="cart-add-btn direct-add" data-item="Chicken and Fries" data-price="209">+ Add</button>
                         </div>
 
-                         <div style="background: var(--input-bg); border: 1px solid var(--border-color); border-radius: 8px; padding: 8px 12px; display: flex; justify-content: space-between; align-items: center; gap: 10px;">
+                        <div style="background: var(--input-bg); border: 1px solid var(--border-color); border-radius: 8px; padding: 8px 12px; display: flex; justify-content: space-between; align-items: center; gap: 10px;">
                             <div>
                                 <div style="font-size: 12px; font-weight: 700;">Double Crave Smash</div>
                                 <div style="font-size: 11px; color: var(--text-muted);">₱249</div>
                             </div>
-                            <button class="cart-add-btn" py-click="add_to_cart" data-item="Double Crave Smash" data-price="249">+ Add</button>
+                            <button class="cart-add-btn direct-add" data-item="Double Crave Smash" data-price="249">+ Add</button>
                         </div>
 
-                         <div style="background: var(--input-bg); border: 1px solid var(--border-color); border-radius: 8px; padding: 8px 12px; display: flex; justify-content: space-between; align-items: center; gap: 10px;">
+                        <div style="background: var(--input-bg); border: 1px solid var(--border-color); border-radius: 8px; padding: 8px 12px; display: flex; justify-content: space-between; align-items: center; gap: 10px;">
                             <div>
                                 <div style="font-size: 12px; font-weight: 700;">Spicy Buffalo Wings</div>
                                 <div style="font-size: 11px; color: var(--text-muted);">₱199</div>
                             </div>
-                            <button class="cart-add-btn" py-click="add_to_cart" data-item="Spicy Buffalo Wings" data-price="199">+ Add</button>
+                            <button class="cart-add-btn direct-add" data-item="Spicy Buffalo Wings" data-price="199">+ Add</button>
                         </div>
 
-                         <div style="background: var(--input-bg); border: 1px solid var(--border-color); border-radius: 8px; padding: 8px 12px; display: flex; justify-content: space-between; align-items: center; gap: 10px;">
+                        <div style="background: var(--input-bg); border: 1px solid var(--border-color); border-radius: 8px; padding: 8px 12px; display: flex; justify-content: space-between; align-items: center; gap: 10px;">
                             <div>
                                 <div style="font-size: 12px; font-weight: 700;">Crave Mega Fries</div>
                                 <div style="font-size: 11px; color: var(--text-muted);">₱129</div>
                             </div>
-                            <button class="cart-add-btn" py-click="add_to_cart" data-item="Crave Mega Fries" data-price="129">+ Add</button>
+                            <button class="cart-add-btn direct-add" data-item="Crave Mega Fries" data-price="129">+ Add</button>
                         </div>
 
-                         <div style="background: var(--input-bg); border: 1px solid var(--border-color); border-radius: 8px; padding: 8px 12px; display: flex; justify-content: space-between; align-items: center; gap: 10px;">
+                        <div style="background: var(--input-bg); border: 1px solid var(--border-color); border-radius: 8px; padding: 8px 12px; display: flex; justify-content: space-between; align-items: center; gap: 10px;">
                             <div>
-                                <div style="font-size: 12px; font-weight: 700;">Cheesy Bacon Burger</Base></div>
+                                <div style="font-size: 12px; font-weight: 700;">Cheesy Bacon Burger</div>
                                 <div style="font-size: 11px; color: var(--text-muted);">₱229</div>
                             </div>
-                            <button class="cart-add-btn" py-click="add_to_cart" data-item="Cheesy Bacon Burger" data-price="229">+ Add</button>
+                            <button class="cart-add-btn direct-add" data-item="Cheesy Bacon Burger" data-price="229">+ Add</button>
                         </div>
 
                         <div style="background: var(--input-bg); border: 1px solid var(--border-color); border-radius: 8px; padding: 8px 12px; display: flex; justify-content: space-between; align-items: center; gap: 10px;">
@@ -386,7 +373,7 @@
                                 <div style="font-size: 12px; font-weight: 700;">Crispy Onion Rings</div>
                                 <div style="font-size: 11px; color: var(--text-muted);">₱99</div>
                             </div>
-                            <button class="cart-add-btn" py-click="add_to_cart" data-item="Crispy Onion Rings" data-price="99">+ Add</button>
+                            <button class="cart-add-btn direct-add" data-item="Crispy Onion Rings" data-price="99">+ Add</button>
                         </div>
 
                     </div>
@@ -397,6 +384,45 @@
 
     <script>
         lucide.createIcons();
+
+        function handleDirectCart(itemName, priceVal) {
+            let cart = [];
+            try {
+                let stored = localStorage.getItem("craveco_cart");
+                if (stored) cart = JSON.parse(stored);
+            } catch(e) { cart = []; }
+
+            let found = false;
+            for (let i = 0; i < cart.length; i++) {
+                if (cart[i].name === itemName) {
+                    cart[i].qty = (cart[i].qty || 1) + 1;
+                    found = true;
+                    break;
+                }
+            }
+            if (!found) {
+                cart.push({ name: itemName, price: parseFloat(priceVal), qty: 1 });
+            }
+
+            localStorage.setItem("craveco_cart", JSON.stringify(cart));
+            
+            let badge = document.getElementById("cart-count");
+            if (badge) {
+                let total = cart.reduce((sum, item) => sum + (item.qty || 1), 0);
+                badge.textContent = total;
+            }
+
+            window.location.reload();
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            document.querySelectorAll(".direct-add").forEach(btn => {
+                btn.addEventListener("click", (e) => {
+                    e.preventDefault();
+                    handleDirectCart(btn.getAttribute("data-item"), btn.getAttribute("data-price"));
+                });
+            });
+        });
     </script>
     <script type="py" src="./main.py"></script>
 </body>
