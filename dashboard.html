@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,7 +12,7 @@
     <script src="https://unpkg.com/lucide@latest"></script>
 
     <link rel="shortcut icon" type="image/png" href="logo.png">
-
+    
     <style>
         :root {
             --bg-dark: #0A0A0C;
@@ -48,7 +49,7 @@
         .wrapper {
             width: 100%;
             max-width: 1240px;
-            height: 820px;
+            min-height: 700px;
             display: grid;
             grid-template-columns: 1fr 1fr;
             background-color: var(--card-bg);
@@ -192,12 +193,10 @@
             margin-bottom: 2px;
         }
 
-        /* FORM & MENU SECTION FIXES */
         .form-section {
             padding: 36px 40px;
             display: flex;
             flex-direction: column;
-            height: 100%;
             min-width: 0;
             position: relative;
         }
@@ -271,7 +270,6 @@
             overflow-x: auto;
             padding-bottom: 8px;
             margin-bottom: 12px;
-            flex-shrink: 0;
         }
 
         .category-container::-webkit-scrollbar {
@@ -303,9 +301,8 @@
             border-color: var(--brand-orange);
         }
 
-        /* FLEX FIXED MENU CONTAINER */
         .scrollable-menu {
-            flex: 1;
+            max-height: 440px;
             overflow-y: auto;
             padding-right: 6px;
         }
@@ -371,7 +368,6 @@
             height: 110px;
             object-fit: cover;
             display: block;
-            background-color: var(--card-bg);
         }
 
         .card-select,
@@ -434,7 +430,6 @@
 
             .wrapper {
                 grid-template-columns: 1fr;
-                height: auto;
                 min-height: auto;
             }
 
@@ -496,7 +491,7 @@
         <div>
             <!-- UPDATED LOGO: IMAGE + BRAND NAME -->
             <div class="brand-logo">
-                <img src="logo.png" alt="CraveCo Logo" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1561758033-d89a9ad46330?auto=format&fit=crop&w=150&q=80';">
+                <img src="logo.png" alt="CraveCo Logo">
             </div>
 
             <span class="hero-tag">🔥 Direct Kitchen &amp; Express Delivery</span>
@@ -549,7 +544,7 @@
     <!-- RIGHT FOOD MENU SECTION -->
     <div class="form-section">
 
-        <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:14px;flex-shrink:0;">
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:14px;">
             <div>
                 <h2 style="font-size:20px;font-weight:800;">
                     Deliver to <span style="color:var(--brand-orange);">Cebu City</span> 📍
@@ -578,7 +573,7 @@
             <button class="category-tab" onclick="filterCategory('burgers', this)">Burgers 🍔</button>
             <button class="category-tab" onclick="filterCategory('wings', this)">Chicken Wings 🍗</button>
             <button class="category-tab" onclick="filterCategory('fries', this)">Fries &amp; Rings 🍟</button>
-            <button class="category-tab" onclick="filterCategory('chicken', this)">Chicken & Fries 🍗</button>
+            <button class="category-tab" onclick="filterCategory('chicken', this)">Chicken & Fries🍗</button>
         </div>
 
         <!-- FOOD CARDS -->
@@ -588,7 +583,6 @@
                 <!-- 1. DOUBLE CRAVE SMASH -->
                 <div class="food-card category-burgers">
                     <img src="Double Crave Smash.jpg"
-                         onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=400&q=80';"
                          alt="Double Crave Smash" class="menu-img">
 
                     <div class="food-info">
@@ -618,7 +612,6 @@
                 <!-- 2. CHEESY BACON BURGER -->
                 <div class="food-card category-burgers">
                     <img src="Cheesy Bacon Burger(1).jpg"
-                         onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=400&q=80';"
                          alt="Cheesy Bacon Burger" class="menu-img">
 
                     <div class="food-info">
@@ -648,7 +641,6 @@
                 <!-- 3. GARLIC BUTTER WINGS -->
                 <div class="food-card category-wings">
                     <img src="Garlic Butter Wings.jpg"
-                         onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1567620832903-9fc6debc209f?auto=format&fit=crop&w=400&q=80';"
                          alt="Garlic Butter Wings" class="menu-img">
 
                     <div class="food-info">
@@ -678,7 +670,6 @@
                 <!-- 4. SPICY BUFFALO WINGS -->
                 <div class="food-card category-wings">
                     <img src="Spicy Buffalo Wings.jpg"
-                         onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1608039829572-78524f79c4c7?auto=format&fit=crop&w=400&q=80';"
                          alt="Spicy Buffalo Wings" class="menu-img">
 
                     <div class="food-info">
@@ -708,7 +699,6 @@
                 <!-- 5. CRAVE MEGA FRIES -->
                 <div class="food-card category-fries">
                     <img src="Crave Mega Fries.png"
-                         onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1573080496219-bb080dd4f877?auto=format&fit=crop&w=400&q=80';"
                          alt="Crave Mega Fries" class="menu-img">
 
                     <div class="food-info">
@@ -738,7 +728,6 @@
                 <!-- 6. CRISPY ONION RINGS -->
                 <div class="food-card category-fries">
                     <img src="Crispy Onion Rings.jpg"
-                         onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1639024471283-03518883512d?auto=format&fit=crop&w=400&q=80';"
                          alt="Crispy Onion Rings" class="menu-img">
 
                     <div class="food-info">
@@ -768,7 +757,6 @@
                 <!-- 7. CHICKEN AND FRIES -->
                 <div class="food-card category-chicken">
                     <img src="Chicken and Fries.png"
-                         onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1626645738196-c2a7c87a8f58?auto=format&fit=crop&w=400&q=80';"
                          alt="Chicken and Fries" class="menu-img">
 
                     <div class="food-info">
