@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,13 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CraveCo - Online Food Service Portal</title>
 
+    <!-- PyScript & Fonts -->
     <link rel="stylesheet" href="https://pyscript.net/releases/2023.11.1/core.css">
     <script type="module" src="https://pyscript.net/releases/2023.11.1/core.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
 
     <link rel="shortcut icon" type="image/png" href="logo.png">
-    
+
     <style>
         :root {
             --bg-dark: #0A0A0C;
@@ -48,10 +48,11 @@
 
         .wrapper {
             width: 100%;
-            max-width: 1240px;
-            min-height: 700px;
+            max-width: 1280px;
+            height: 90vh;
+            min-height: 720px;
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: 460px 1fr;
             background-color: var(--card-bg);
             border: 1px solid var(--border-color);
             border-radius: 30px;
@@ -59,10 +60,11 @@
             box-shadow: 0 30px 60px -15px rgba(0,0,0,.8);
         }
 
+        /* LEFT HERO SECTION */
         .hero-section {
             position: relative;
             background: #0A0A0C;
-            padding: 40px;
+            padding: 36px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
@@ -95,7 +97,6 @@
             z-index: 3;
         }
 
-        /* CraveCo Logo */
         .brand-logo {
             display: flex;
             align-items: center;
@@ -104,22 +105,14 @@
         }
 
         .brand-logo img {
-            width: 100px;
-            height: 100px;
+            width: 80px;
+            height: 80px;
             object-fit: contain;
             display: block;
-            border-radius: 20px;
-        }
-
-        .brand-name {
-            font-size: 28px;
-            font-weight: 800;
-            letter-spacing: -0.5px;
-            color: var(--brand-white);
-        }
-
-        .brand-name span {
-            color: var(--brand-orange);
+            border-radius: 16px;
+            background: rgba(255,255,255,0.05);
+            padding: 6px;
+            border: 1px solid rgba(255,255,255,0.1);
         }
 
         .hero-tag {
@@ -135,8 +128,8 @@
         }
 
         .hero-title {
-            font-size: 36px;
-            line-height: 1.15;
+            font-size: 32px;
+            line-height: 1.18;
             font-weight: 800;
             margin-bottom: 14px;
         }
@@ -193,11 +186,13 @@
             margin-bottom: 2px;
         }
 
+        /* RIGHT FORM / MENU SECTION */
         .form-section {
-            padding: 36px 40px;
+            padding: 30px 36px;
             display: flex;
             flex-direction: column;
-            min-width: 0;
+            height: 100%;
+            overflow: hidden;
             position: relative;
         }
 
@@ -211,7 +206,7 @@
             font-weight: 700;
             font-size: 12px;
             cursor: pointer;
-            transition: opacity .2s ease;
+            transition: opacity .2s ease, transform .1s ease;
             text-decoration: none;
             text-align: center;
             display: inline-block;
@@ -219,6 +214,7 @@
 
         .submit-btn:hover {
             opacity: .92;
+            transform: translateY(-1px);
         }
 
         .cart-btn {
@@ -235,11 +231,13 @@
             align-items: center;
             justify-content: center;
             gap: 6px;
+            transition: all 0.2s ease;
         }
 
         .cart-btn:hover {
             border-color: var(--brand-orange);
             color: var(--brand-orange);
+            background: rgba(255, 87, 34, 0.08);
         }
 
         .cancel-btn {
@@ -269,7 +267,8 @@
             gap: 8px;
             overflow-x: auto;
             padding-bottom: 8px;
-            margin-bottom: 12px;
+            margin-bottom: 16px;
+            flex-shrink: 0;
         }
 
         .category-container::-webkit-scrollbar {
@@ -285,9 +284,9 @@
             background: var(--input-bg);
             border: 1px solid var(--border-color);
             color: var(--text-muted);
-            padding: 6px 12px;
+            padding: 8px 16px;
             border-radius: 20px;
-            font-size: 11px;
+            font-size: 12px;
             font-weight: 700;
             cursor: pointer;
             white-space: nowrap;
@@ -301,10 +300,13 @@
             border-color: var(--brand-orange);
         }
 
+        /* SCROLLABLE MENU FILLS ALL REMAINING SPACE */
         .scrollable-menu {
-            max-height: 440px;
+            flex: 1;
             overflow-y: auto;
             padding-right: 6px;
+            margin-bottom: 16px;
+            min-height: 0; /* Crucial for nested flex grid scrolling */
         }
 
         .scrollable-menu::-webkit-scrollbar {
@@ -324,15 +326,18 @@
         .food-grid {
             display: grid;
             grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 14px;
+            gap: 16px;
         }
 
         .food-card {
             background: var(--input-bg);
             border: 1px solid var(--border-color);
-            border-radius: 16px;
+            border-radius: 18px;
             overflow: hidden;
             min-width: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
             transition: transform .2s ease, border-color .2s ease;
         }
 
@@ -342,32 +347,40 @@
         }
 
         .food-info {
-            padding: 10px;
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            justify-content: space-between;
         }
 
         .food-name {
             font-weight: 700;
-            font-size: 13px;
+            font-size: 14px;
             margin-bottom: 4px;
+            color: var(--brand-white);
         }
 
         .food-price {
-            font-size: 11px;
-            color: var(--text-muted);
-            margin-bottom: 8px;
+            font-size: 12px;
+            color: var(--brand-orange);
+            font-weight: 700;
+            margin-bottom: 10px;
         }
 
         .food-actions {
             display: flex;
             flex-direction: column;
-            gap: 5px;
+            gap: 6px;
+            margin-top: auto;
         }
 
         .menu-img {
             width: 100%;
-            height: 110px;
+            height: 125px;
             object-fit: cover;
             display: block;
+            background-color: #101014;
         }
 
         .card-select,
@@ -393,7 +406,7 @@
             background: var(--input-bg);
             border: 1px solid var(--border-color);
             padding: 8px 14px;
-            border-radius: 10px;
+            border-radius: 12px;
             cursor: pointer;
             color: var(--brand-white);
             display: flex;
@@ -402,6 +415,7 @@
             font-size: 13px;
             font-weight: 700;
             text-decoration: none;
+            transition: all 0.2s ease;
         }
 
         .cart-icon-btn:hover {
@@ -422,7 +436,89 @@
             justify-content: center;
         }
 
-        @media (max-width: 950px) {
+        /* BOTTOM SPACE FILLER & QUICK CHECKOUT BAR */
+        .bottom-checkout-bar {
+            flex-shrink: 0;
+            background: rgba(28,28,36,0.9);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 14px 18px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            backdrop-filter: blur(10px);
+        }
+
+        .summary-details {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .summary-label {
+            font-size: 11px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 700;
+        }
+
+        .summary-value {
+            font-size: 16px;
+            font-weight: 800;
+            color: var(--brand-white);
+        }
+
+        .checkout-action-btn {
+            background: var(--accent-gradient);
+            color: var(--brand-white);
+            padding: 10px 20px;
+            border-radius: 14px;
+            font-weight: 800;
+            font-size: 13px;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            transition: transform 0.2s ease, opacity 0.2s ease;
+        }
+
+        .checkout-action-btn:hover {
+            opacity: 0.95;
+            transform: scale(1.02);
+        }
+
+        /* NOTIFICATION TOAST */
+        #toast {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            background: var(--card-bg);
+            border: 1px solid var(--brand-orange);
+            color: var(--brand-white);
+            padding: 12px 20px;
+            border-radius: 14px;
+            font-size: 13px;
+            font-weight: 600;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            z-index: 1000;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        #toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        @media (max-width: 980px) {
             body {
                 padding: 12px;
                 align-items: flex-start;
@@ -430,6 +526,7 @@
 
             .wrapper {
                 grid-template-columns: 1fr;
+                height: auto;
                 min-height: auto;
             }
 
@@ -439,37 +536,21 @@
 
             .form-section {
                 padding: 24px 20px;
+                height: auto;
             }
 
             .scrollable-menu {
-                max-height: none;
-                overflow: visible;
+                max-height: 520px;
             }
         }
 
-        @media (max-width: 480px) {
+        @media (max-width: 520px) {
+            .food-grid {
+                grid-template-columns: 1fr;
+            }
+
             .form-section {
                 padding: 18px 12px;
-            }
-
-            .food-grid {
-                gap: 9px;
-            }
-
-            .food-name {
-                font-size: 12px;
-            }
-
-            .submit-btn {
-                font-size: 11px;
-            }
-
-            .food-info {
-                padding: 8px;
-            }
-
-            .cart-icon-btn {
-                padding: 7px 9px;
             }
         }
     </style>
@@ -483,15 +564,17 @@
 
         <video autoplay muted loop playsinline class="promo-video-bg">
             <source src="video craveco.mp4" type="video/mp4">
-            Your browser does not support the video tag.
         </video>
 
         <div class="promo-overlay"></div>
 
         <div>
-            <!-- UPDATED LOGO: IMAGE + BRAND NAME -->
             <div class="brand-logo">
-                <img src="logo.png" alt="CraveCo Logo">
+                <img src="logo.png" alt="CraveCo Logo" onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'80\' height=\'80\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'%23FF5722\' stroke-width=\'2\' stroke-linecap=\'round\' stroke-linejoin=\'round\'><path d=\'M18 8h1a4 4 0 0 1 0 8h-1\'/><path d=\'M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z\'/><line x1=\'6\' y1=\'1\' x2=\'6\' y2=\'4\'/><line x1=\'10\' y1=\'1\' x2=\'10\' y2=\'4\'/><line x1=\'14\' y1=\'1\' x2=\'14\' y2=\'4\'/></svg>';">
+                <div>
+                    <h1 class="brand-name" style="font-size: 26px; font-weight:800;">Crave<span>Co</span></h1>
+                    <p style="font-size:11px; color: var(--text-muted);">Comfort Food Direct</p>
+                </div>
             </div>
 
             <span class="hero-tag">🔥 Direct Kitchen &amp; Express Delivery</span>
@@ -544,26 +627,26 @@
     <!-- RIGHT FOOD MENU SECTION -->
     <div class="form-section">
 
-        <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:14px;">
+        <!-- HEADER BAR -->
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:16px;flex-shrink:0;">
             <div>
                 <h2 style="font-size:20px;font-weight:800;">
                     Deliver to <span style="color:var(--brand-orange);">Cebu City</span> 📍
                 </h2>
                 <p style="color:var(--text-muted);font-size:12px;" id="welcome-user-subtitle">
-                    Ready for your meal?
+                    Select your favorites below to start your order
                 </p>
             </div>
 
             <div style="display:flex;gap:10px;align-items:center;">
-                <a href="cart.html" class="cart-icon-btn">
-                    <i data-lucide="shopping-cart" style="width:18px;height:18px;"></i>
+                <a href="#cart" class="cart-icon-btn" onclick="scrollToCheckout()">
+                    <i data-lucide="shopping-bag" style="width:18px;height:18px;color:var(--brand-orange)"></i>
                     <span class="cart-count-badge" id="cart-badge-count">0</span>
                 </a>
 
-                <a href="index.html" class="submit-btn"
-                   style="width:auto;padding:8px 14px;font-size:12px;">
+                <button class="submit-btn" onclick="handleSignOut()" style="width:auto;padding:8px 14px;font-size:12px;">
                     Sign Out
-                </a>
+                </button>
             </div>
         </div>
 
@@ -573,25 +656,27 @@
             <button class="category-tab" onclick="filterCategory('burgers', this)">Burgers 🍔</button>
             <button class="category-tab" onclick="filterCategory('wings', this)">Chicken Wings 🍗</button>
             <button class="category-tab" onclick="filterCategory('fries', this)">Fries &amp; Rings 🍟</button>
-            <button class="category-tab" onclick="filterCategory('chicken', this)">Chicken & Fries🍗</button>
+            <button class="category-tab" onclick="filterCategory('chicken', this)">Chicken &amp; Fries 🍗</button>
         </div>
 
-        <!-- FOOD CARDS -->
+        <!-- FOOD CARDS (Expanded to gracefully fill remaining vertical space) -->
         <div class="scrollable-menu">
             <div class="food-grid">
 
                 <!-- 1. DOUBLE CRAVE SMASH -->
                 <div class="food-card category-burgers">
-                    <img src="Double Crave Smash.jpg"
-                         alt="Double Crave Smash" class="menu-img">
+                    <img src="Double Crave Smash.jpg" alt="Double Crave Smash" class="menu-img"
+                         onerror="this.onerror=null; this.src='https://placehold.co/400x250/1C1C24/FF5722?text=Double+Crave+Smash';">
 
                     <div class="food-info">
-                        <div class="food-name">Double Crave Smash</div>
-                        <div class="food-price">25 mins • ₱249</div>
+                        <div>
+                            <div class="food-name">Double Crave Smash</div>
+                            <div class="food-price">25 mins • ₱249</div>
+                        </div>
 
                         <div id="btn-container-1" class="food-actions">
-                            <button class="submit-btn" py-click="open_card_options" data-id="1">Order Now</button>
-                            <button class="cart-btn" py-click="add_to_cart" data-item="Double Crave Smash" data-price="249">Add to Cart</button>
+                            <button class="submit-btn" py-click="open_card_options" data-id="1" onclick="openCardOptions(1)">Order Now</button>
+                            <button class="cart-btn" py-click="add_to_cart" data-item="Double Crave Smash" data-price="249" onclick="addToCart('Double Crave Smash', 249)">Add to Cart</button>
                         </div>
 
                         <div id="options-container-1" class="hidden" style="margin-top:6px;">
@@ -603,24 +688,26 @@
                             <input type="text" id="phone-1" class="card-input" placeholder="Contact Number...">
                             <input type="text" id="address-1" class="card-input" placeholder="Delivery Address...">
                             <input type="text" id="note-1" class="card-input" placeholder="Special Request...">
-                            <button class="submit-btn" py-click="confirm_card_order" data-item="Double Crave Smash" data-price="₱249" data-id="1">Confirm Order ➔</button>
-                            <button class="cancel-btn" py-click="cancel_card_options" data-id="1">Cancel</button>
+                            <button class="submit-btn" py-click="confirm_card_order" data-item="Double Crave Smash" data-price="₱249" data-id="1" onclick="confirmCardOrder(1, 'Double Crave Smash', 249)">Confirm Order ➔</button>
+                            <button class="cancel-btn" py-click="cancel_card_options" data-id="1" onclick="cancelCardOptions(1)">Cancel</button>
                         </div>
                     </div>
                 </div>
 
                 <!-- 2. CHEESY BACON BURGER -->
                 <div class="food-card category-burgers">
-                    <img src="Cheesy Bacon Burger(1).jpg"
-                         alt="Cheesy Bacon Burger" class="menu-img">
+                    <img src="Cheesy Bacon Burger(1).jpg" alt="Cheesy Bacon Burger" class="menu-img"
+                         onerror="this.onerror=null; this.src='https://placehold.co/400x250/1C1C24/FF5722?text=Cheesy+Bacon+Burger';">
 
                     <div class="food-info">
-                        <div class="food-name">Cheesy Bacon Burger</div>
-                        <div class="food-price">20 mins • ₱229</div>
+                        <div>
+                            <div class="food-name">Cheesy Bacon Burger</div>
+                            <div class="food-price">20 mins • ₱229</div>
+                        </div>
 
                         <div id="btn-container-2" class="food-actions">
-                            <button class="submit-btn" py-click="open_card_options" data-id="2">Order Now</button>
-                            <button class="cart-btn" py-click="add_to_cart" data-item="Cheesy Bacon Burger" data-price="229">Add to Cart</button>
+                            <button class="submit-btn" py-click="open_card_options" data-id="2" onclick="openCardOptions(2)">Order Now</button>
+                            <button class="cart-btn" py-click="add_to_cart" data-item="Cheesy Bacon Burger" data-price="229" onclick="addToCart('Cheesy Bacon Burger', 229)">Add to Cart</button>
                         </div>
 
                         <div id="options-container-2" class="hidden" style="margin-top:6px;">
@@ -632,24 +719,26 @@
                             <input type="text" id="phone-2" class="card-input" placeholder="Contact Number...">
                             <input type="text" id="address-2" class="card-input" placeholder="Delivery Address...">
                             <input type="text" id="note-2" class="card-input" placeholder="Special Request...">
-                            <button class="submit-btn" py-click="confirm_card_order" data-item="Cheesy Bacon Burger" data-price="₱229" data-id="2">Confirm Order ➔</button>
-                            <button class="cancel-btn" py-click="cancel_card_options" data-id="2">Cancel</button>
+                            <button class="submit-btn" py-click="confirm_card_order" data-item="Cheesy Bacon Burger" data-price="₱229" data-id="2" onclick="confirmCardOrder(2, 'Cheesy Bacon Burger', 229)">Confirm Order ➔</button>
+                            <button class="cancel-btn" py-click="cancel_card_options" data-id="2" onclick="cancelCardOptions(2)">Cancel</button>
                         </div>
                     </div>
                 </div>
 
                 <!-- 3. GARLIC BUTTER WINGS -->
                 <div class="food-card category-wings">
-                    <img src="Garlic Butter Wings.jpg"
-                         alt="Garlic Butter Wings" class="menu-img">
+                    <img src="Garlic Butter Wings.jpg" alt="Garlic Butter Wings" class="menu-img"
+                         onerror="this.onerror=null; this.src='https://placehold.co/400x250/1C1C24/FF5722?text=Garlic+Butter+Wings';">
 
                     <div class="food-info">
-                        <div class="food-name">Garlic Butter Wings</div>
-                        <div class="food-price">20 mins • ₱199</div>
+                        <div>
+                            <div class="food-name">Garlic Butter Wings</div>
+                            <div class="food-price">20 mins • ₱199</div>
+                        </div>
 
                         <div id="btn-container-3" class="food-actions">
-                            <button class="submit-btn" py-click="open_card_options" data-id="3">Order Now</button>
-                            <button class="cart-btn" py-click="add_to_cart" data-item="Garlic Butter Wings" data-price="199">Add to Cart</button>
+                            <button class="submit-btn" py-click="open_card_options" data-id="3" onclick="openCardOptions(3)">Order Now</button>
+                            <button class="cart-btn" py-click="add_to_cart" data-item="Garlic Butter Wings" data-price="199" onclick="addToCart('Garlic Butter Wings', 199)">Add to Cart</button>
                         </div>
 
                         <div id="options-container-3" class="hidden" style="margin-top:6px;">
@@ -661,24 +750,26 @@
                             <input type="text" id="phone-3" class="card-input" placeholder="Contact Number...">
                             <input type="text" id="address-3" class="card-input" placeholder="Delivery Address...">
                             <input type="text" id="note-3" class="card-input" placeholder="Special Request...">
-                            <button class="submit-btn" py-click="confirm_card_order" data-item="Garlic Butter Wings" data-price="₱199" data-id="3">Confirm Order ➔</button>
-                            <button class="cancel-btn" py-click="cancel_card_options" data-id="3">Cancel</button>
+                            <button class="submit-btn" py-click="confirm_card_order" data-item="Garlic Butter Wings" data-price="₱199" data-id="3" onclick="confirmCardOrder(3, 'Garlic Butter Wings', 199)">Confirm Order ➔</button>
+                            <button class="cancel-btn" py-click="cancel_card_options" data-id="3" onclick="cancelCardOptions(3)">Cancel</button>
                         </div>
                     </div>
                 </div>
 
                 <!-- 4. SPICY BUFFALO WINGS -->
                 <div class="food-card category-wings">
-                    <img src="Spicy Buffalo Wings.jpg"
-                         alt="Spicy Buffalo Wings" class="menu-img">
+                    <img src="Spicy Buffalo Wings.jpg" alt="Spicy Buffalo Wings" class="menu-img"
+                         onerror="this.onerror=null; this.src='https://placehold.co/400x250/1C1C24/FF5722?text=Spicy+Buffalo+Wings';">
 
                     <div class="food-info">
-                        <div class="food-name">Spicy Buffalo Wings</div>
-                        <div class="food-price">20 mins • ₱199</div>
+                        <div>
+                            <div class="food-name">Spicy Buffalo Wings</div>
+                            <div class="food-price">20 mins • ₱199</div>
+                        </div>
 
                         <div id="btn-container-4" class="food-actions">
-                            <button class="submit-btn" py-click="open_card_options" data-id="4">Order Now</button>
-                            <button class="cart-btn" py-click="add_to_cart" data-item="Spicy Buffalo Wings" data-price="199">Add to Cart</button>
+                            <button class="submit-btn" py-click="open_card_options" data-id="4" onclick="openCardOptions(4)">Order Now</button>
+                            <button class="cart-btn" py-click="add_to_cart" data-item="Spicy Buffalo Wings" data-price="199" onclick="addToCart('Spicy Buffalo Wings', 199)">Add to Cart</button>
                         </div>
 
                         <div id="options-container-4" class="hidden" style="margin-top:6px;">
@@ -690,24 +781,26 @@
                             <input type="text" id="phone-4" class="card-input" placeholder="Contact Number...">
                             <input type="text" id="address-4" class="card-input" placeholder="Delivery Address...">
                             <input type="text" id="note-4" class="card-input" placeholder="Special Request...">
-                            <button class="submit-btn" py-click="confirm_card_order" data-item="Spicy Buffalo Wings" data-price="₱199" data-id="4">Confirm Order ➔</button>
-                            <button class="cancel-btn" py-click="cancel_card_options" data-id="4">Cancel</button>
+                            <button class="submit-btn" py-click="confirm_card_order" data-item="Spicy Buffalo Wings" data-price="₱199" data-id="4" onclick="confirmCardOrder(4, 'Spicy Buffalo Wings', 199)">Confirm Order ➔</button>
+                            <button class="cancel-btn" py-click="cancel_card_options" data-id="4" onclick="cancelCardOptions(4)">Cancel</button>
                         </div>
                     </div>
                 </div>
 
                 <!-- 5. CRAVE MEGA FRIES -->
                 <div class="food-card category-fries">
-                    <img src="Crave Mega Fries.png"
-                         alt="Crave Mega Fries" class="menu-img">
+                    <img src="Crave Mega Fries.png" alt="Crave Mega Fries" class="menu-img"
+                         onerror="this.onerror=null; this.src='https://placehold.co/400x250/1C1C24/FF5722?text=Crave+Mega+Fries';">
 
                     <div class="food-info">
-                        <div class="food-name">Crave Mega Fries</div>
-                        <div class="food-price">15 mins • ₱129</div>
+                        <div>
+                            <div class="food-name">Crave Mega Fries</div>
+                            <div class="food-price">15 mins • ₱129</div>
+                        </div>
 
                         <div id="btn-container-5" class="food-actions">
-                            <button class="submit-btn" py-click="open_card_options" data-id="5">Order Now</button>
-                            <button class="cart-btn" py-click="add_to_cart" data-item="Crave Mega Fries" data-price="129">Add to Cart</button>
+                            <button class="submit-btn" py-click="open_card_options" data-id="5" onclick="openCardOptions(5)">Order Now</button>
+                            <button class="cart-btn" py-click="add_to_cart" data-item="Crave Mega Fries" data-price="129" onclick="addToCart('Crave Mega Fries', 129)">Add to Cart</button>
                         </div>
 
                         <div id="options-container-5" class="hidden" style="margin-top:6px;">
@@ -719,24 +812,26 @@
                             <input type="text" id="phone-5" class="card-input" placeholder="Contact Number...">
                             <input type="text" id="address-5" class="card-input" placeholder="Delivery Address...">
                             <input type="text" id="note-5" class="card-input" placeholder="Special Request...">
-                            <button class="submit-btn" py-click="confirm_card_order" data-item="Crave Mega Fries" data-price="₱129" data-id="5">Confirm Order ➔</button>
-                            <button class="cancel-btn" py-click="cancel_card_options" data-id="5">Cancel</button>
+                            <button class="submit-btn" py-click="confirm_card_order" data-item="Crave Mega Fries" data-price="₱129" data-id="5" onclick="confirmCardOrder(5, 'Crave Mega Fries', 129)">Confirm Order ➔</button>
+                            <button class="cancel-btn" py-click="cancel_card_options" data-id="5" onclick="cancelCardOptions(5)">Cancel</button>
                         </div>
                     </div>
                 </div>
 
                 <!-- 6. CRISPY ONION RINGS -->
                 <div class="food-card category-fries">
-                    <img src="Crispy Onion Rings.jpg"
-                         alt="Crispy Onion Rings" class="menu-img">
+                    <img src="Crispy Onion Rings.jpg" alt="Crispy Onion Rings" class="menu-img"
+                         onerror="this.onerror=null; this.src='https://placehold.co/400x250/1C1C24/FF5722?text=Crispy+Onion+Rings';">
 
                     <div class="food-info">
-                        <div class="food-name">Crispy Onion Rings</div>
-                        <div class="food-price">15 mins • ₱99</div>
+                        <div>
+                            <div class="food-name">Crispy Onion Rings</div>
+                            <div class="food-price">15 mins • ₱99</div>
+                        </div>
 
                         <div id="btn-container-6" class="food-actions">
-                            <button class="submit-btn" py-click="open_card_options" data-id="6">Order Now</button>
-                            <button class="cart-btn" py-click="add_to_cart" data-item="Crispy Onion Rings" data-price="99">Add to Cart</button>
+                            <button class="submit-btn" py-click="open_card_options" data-id="6" onclick="openCardOptions(6)">Order Now</button>
+                            <button class="cart-btn" py-click="add_to_cart" data-item="Crispy Onion Rings" data-price="99" onclick="addToCart('Crispy Onion Rings', 99)">Add to Cart</button>
                         </div>
 
                         <div id="options-container-6" class="hidden" style="margin-top:6px;">
@@ -748,24 +843,26 @@
                             <input type="text" id="phone-6" class="card-input" placeholder="Contact Number...">
                             <input type="text" id="address-6" class="card-input" placeholder="Delivery Address...">
                             <input type="text" id="note-6" class="card-input" placeholder="Special Request...">
-                            <button class="submit-btn" py-click="confirm_card_order" data-item="Crispy Onion Rings" data-price="₱99" data-id="6">Confirm Order ➔</button>
-                            <button class="cancel-btn" py-click="cancel_card_options" data-id="6">Cancel</button>
+                            <button class="submit-btn" py-click="confirm_card_order" data-item="Crispy Onion Rings" data-price="₱99" data-id="6" onclick="confirmCardOrder(6, 'Crispy Onion Rings', 99)">Confirm Order ➔</button>
+                            <button class="cancel-btn" py-click="cancel_card_options" data-id="6" onclick="cancelCardOptions(6)">Cancel</button>
                         </div>
                     </div>
                 </div>
 
                 <!-- 7. CHICKEN AND FRIES -->
                 <div class="food-card category-chicken">
-                    <img src="Chicken and Fries.png"
-                         alt="Chicken and Fries" class="menu-img">
+                    <img src="Chicken and Fries.png" alt="Chicken and Fries" class="menu-img"
+                         onerror="this.onerror=null; this.src='https://placehold.co/400x250/1C1C24/FF5722?text=Chicken+and+Fries';">
 
                     <div class="food-info">
-                        <div class="food-name">Chicken and Fries</div>
-                        <div class="food-price">25 mins • ₱209</div>
+                        <div>
+                            <div class="food-name">Chicken and Fries</div>
+                            <div class="food-price">25 mins • ₱209</div>
+                        </div>
 
                         <div id="btn-container-7" class="food-actions">
-                            <button class="submit-btn" py-click="open_card_options" data-id="7">Order Now</button>
-                            <button class="cart-btn" py-click="add_to_cart" data-item="Chicken and Fries" data-price="209">Add to Cart</button>
+                            <button class="submit-btn" py-click="open_card_options" data-id="7" onclick="openCardOptions(7)">Order Now</button>
+                            <button class="cart-btn" py-click="add_to_cart" data-item="Chicken and Fries" data-price="209" onclick="addToCart('Chicken and Fries', 209)">Add to Cart</button>
                         </div>
 
                         <div id="options-container-7" class="hidden" style="margin-top:6px;">
@@ -777,38 +874,131 @@
                             <input type="text" id="phone-7" class="card-input" placeholder="Contact Number...">
                             <input type="text" id="address-7" class="card-input" placeholder="Delivery Address...">
                             <input type="text" id="note-7" class="card-input" placeholder="Special Request...">
-                            <button class="submit-btn" py-click="confirm_card_order" data-item="Chicken and Fries" data-price="₱209" data-id="7">Confirm Order ➔</button>
-                            <button class="cancel-btn" py-click="cancel_card_options" data-id="7">Cancel</button>
+                            <button class="submit-btn" py-click="confirm_card_order" data-item="Chicken and Fries" data-price="₱209" data-id="7" onclick="confirmCardOrder(7, 'Chicken and Fries', 209)">Confirm Order ➔</button>
+                            <button class="cancel-btn" py-click="cancel_card_options" data-id="7" onclick="cancelCardOptions(7)">Cancel</button>
                         </div>
                     </div>
                 </div>
 
             </div>
         </div>
+
+        <!-- NEW BOTTOM SPACE UTILIZER: LIVE ORDER & CART CHECKOUT DOCK -->
+        <div class="bottom-checkout-bar" id="checkout-dock">
+            <div class="summary-details">
+                <span class="summary-label">Order Summary</span>
+                <span class="summary-value"><span id="cart-item-count">0</span> Items • <span style="color:var(--brand-orange);" id="cart-total-price">₱0</span></span>
+            </div>
+
+            <div style="display:flex; align-items:center; gap: 10px;">
+                <button class="checkout-action-btn" onclick="proceedToCheckout()">
+                    <span>Proceed to Checkout</span>
+                    <i data-lucide="arrow-right" style="width:16px;height:16px;"></i>
+                </button>
+            </div>
+        </div>
+
     </div>
 </div>
 
+<!-- TOAST NOTIFICATION -->
+<div id="toast">
+    <i data-lucide="check-circle" style="color: #4CAF50; width:18px; height:18px;"></i>
+    <span id="toast-message">Item added to cart!</span>
+</div>
+
 <script>
+    // Initialize Icons
     lucide.createIcons();
+
+    // Cart state manager
+    let cart = [];
 
     function filterCategory(category, btnElement) {
         const tabs = document.querySelectorAll('.category-tab');
-
         tabs.forEach(tab => tab.classList.remove('active'));
         btnElement.classList.add('active');
 
         const cards = document.querySelectorAll('.food-card');
-
         cards.forEach(card => {
-            if (
-                category === 'all' ||
-                card.classList.contains(`category-${category}`)
-            ) {
-                card.style.display = '';
+            if (category === 'all' || card.classList.contains(`category-${category}`)) {
+                card.style.display = 'flex';
             } else {
                 card.style.display = 'none';
             }
         });
+    }
+
+    // Toggle Order Options Form
+    function openCardOptions(id) {
+        document.getElementById(`btn-container-${id}`).classList.add('hidden');
+        document.getElementById(`options-container-${id}`).classList.remove('hidden');
+    }
+
+    function cancelCardOptions(id) {
+        document.getElementById(`options-container-${id}`).classList.add('hidden');
+        document.getElementById(`btn-container-${id}`).classList.remove('hidden');
+    }
+
+    function confirmCardOrder(id, itemName, price) {
+        const phone = document.getElementById(`phone-${id}`).value.trim();
+        const address = document.getElementById(`address-${id}`).value.trim();
+
+        if (!phone || !address) {
+            showToast('⚠️ Please enter phone number and delivery address.');
+            return;
+        }
+
+        showToast(`🎉 Order placed for ${itemName}! Express prep started.`);
+        cancelCardOptions(id);
+    }
+
+    // Cart Functions
+    function addToCart(itemName, price) {
+        cart.push({ name: itemName, price: price });
+        updateCartUI();
+        showToast(`🛒 ${itemName} added to cart!`);
+    }
+
+    function updateCartUI() {
+        const countBadge = document.getElementById('cart-badge-count');
+        const itemCount = document.getElementById('cart-item-count');
+        const totalPrice = document.getElementById('cart-total-price');
+
+        const total = cart.reduce((sum, item) => sum + item.price, 0);
+
+        countBadge.innerText = cart.length;
+        itemCount.innerText = cart.length;
+        totalPrice.innerText = `₱${total}`;
+    }
+
+    function showToast(msg) {
+        const toast = document.getElementById('toast');
+        const toastMsg = document.getElementById('toast-message');
+
+        toastMsg.innerText = msg;
+        toast.classList.add('show');
+
+        setTimeout(() => {
+            toast.classList.remove('show');
+        }, 3000);
+    }
+
+    function proceedToCheckout() {
+        if (cart.length === 0) {
+            showToast('Your cart is empty! Add items to order.');
+            return;
+        }
+        showToast('🚀 Redirecting to CraveCo Express Checkout...');
+    }
+
+    function handleSignOut() {
+        showToast('👋 Signed out successfully.');
+    }
+
+    function scrollToCheckout() {
+        const dock = document.getElementById('checkout-dock');
+        dock.scrollIntoView({ behavior: 'smooth' });
     }
 </script>
 
